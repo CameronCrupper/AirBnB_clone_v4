@@ -1,15 +1,15 @@
 $(document).ready(function () {
-  const dict = {};
-  const $amenitiesCheck = $('input[type=checkbox]');
-  const $selectedAmenities = $('div.amenities h4');
-
-  $amenitiesCheck.click(function () {
-    if ($(this).is(':checked')) {
-      dict[$(this).data('id')] = $(this).data('name');
-      $selectedAmenities.text(Object.values(dict).join(', '));
-    } else if ($(this).is(':not(:checked)')) {
-      delete dict[$(this).data('id')];
-      $selectedAmenities.text(Object.values(dict).join(', '));
+  const checkAmen = {};
+  $(document).on('change', "input[type='checkbox']", function () {
+    if (this.checked) {
+      checkAmen[$(this).data('id')] = $(this).data('name');
+    } else {
+      delete checkAmen[$(this).data('id')];
     }
+    const amenList = [];
+    for (const key in checkAmen) {
+      amenList.push(checkAmen[key]);
+    }
+    $('.amenities h4').text(amenList.join(', '));
   });
 });
